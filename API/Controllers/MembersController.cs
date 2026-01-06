@@ -16,7 +16,7 @@ namespace API.Controllers
         public async Task<ActionResult<IReadOnlyList<Member>>> GetMembers(
             [FromQuery] MemberParams memberParams)
         {
-            memberParams.CurrentMemberId = User.GetMamberId();
+            memberParams.CurrentMemberId = User.GetMemberId();
 
             return Ok(await memberRepository.GetMembersAsync(memberParams));
         }
@@ -40,7 +40,7 @@ namespace API.Controllers
         [HttpPut]
         public async Task<ActionResult> UpdateMember(MemberUpdateDto memberUpdateDto)
         {
-            var memberId = User.GetMamberId();
+            var memberId = User.GetMemberId();
 
             var member = await memberRepository.GetMemberForUpdate(memberId);
 
@@ -63,7 +63,7 @@ namespace API.Controllers
         [HttpPost("add-photo")]
         public async Task<ActionResult<Photo>> AddPhoto([FromForm] IFormFile file)
         {
-            var member = await memberRepository.GetMemberForUpdate(User.GetMamberId());
+            var member = await memberRepository.GetMemberForUpdate(User.GetMemberId());
 
             if (member == null) return BadRequest("Cannot update member");
 
@@ -75,7 +75,7 @@ namespace API.Controllers
             {
                 Url = result.SecureUrl.AbsoluteUri,
                 PublicId = result.PublicId,
-                MemberId = User.GetMamberId()
+                MemberId = User.GetMemberId()
             };
 
             if (member.ImageUrl == null)
@@ -94,7 +94,7 @@ namespace API.Controllers
         [HttpPut("set-main-photo/{photoId}")]
         public async Task<ActionResult> SetMainPhoto(int photoId)
         {
-            var member = await memberRepository.GetMemberForUpdate(User.GetMamberId());
+            var member = await memberRepository.GetMemberForUpdate(User.GetMemberId());
 
             if (member == null) return BadRequest("Cannot get member from token");
 
@@ -116,7 +116,7 @@ namespace API.Controllers
         [HttpDelete("delete-photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto(int photoId)
         {
-            var member = await memberRepository.GetMemberForUpdate(User.GetMamberId());
+            var member = await memberRepository.GetMemberForUpdate(User.GetMemberId());
 
             if (member == null) return BadRequest("Cannot get member from token");
 
