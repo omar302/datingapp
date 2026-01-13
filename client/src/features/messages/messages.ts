@@ -44,6 +44,7 @@ export class Messages implements OnInit {
       next: () => {
         // rather than filtering out deleted message, could just loadMessages() after delete
         // this.loadMessages();
+        
         const current = this.paginatedMessages();
         if (current?.items) {
           this.paginatedMessages.update(prev => {
@@ -51,7 +52,7 @@ export class Messages implements OnInit {
 
             const newItems = prev.items.filter(x => x.id !== id) || [];
 
-            // assitional logic to adjust pagination after filtering out deleted message
+            // additional logic to adjust pagination after filtering out deleted message
             const newMetadata = prev.metadata ? {
               ...prev.metadata,
               totalCount: prev.metadata.totalCount - 1,
